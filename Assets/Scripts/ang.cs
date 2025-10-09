@@ -4,22 +4,15 @@ using UnityEngine.UIElements;
 
 public class ang : MonoBehaviour
 {
-
+    [SerializeField] Transform barra;
     public Sector2D sector2D;
-    Transform barra;
-
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        barra = GameObject.Find("barra").transform;
-        sector2D = GameObject.Find("SectorCircular").GetComponent<Sector2D>();
-    }
+       
 
     // Update is called once per frame
     void Update()
     {
-        float theta = Mathf.Ceil(-barra.rotation.z * 360 / Mathf.PI);
+        float theta = Mathf.RoundToInt(-barra.rotation.z * 360 / Mathf.PI);
         GetComponent<TextMeshPro>().text = theta.ToString()+"º";
         if (Mathf.Abs(theta) < 5)
         {

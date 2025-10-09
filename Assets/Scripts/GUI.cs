@@ -94,7 +94,7 @@ public class GUI : MonoBehaviour
 
     public void LimiteFuerza()
     {
-        Toggle t = FindAnyObjectByType<Toggle>();
+        Toggle t = GameObject.Find("limFuerzaON").GetComponent<Toggle>();
        
         if (t.isOn)
         {
