@@ -61,7 +61,7 @@ public class GUI : MonoBehaviour
 
     public void ReiniciarSimulacion()
     {
-        SceneManager.LoadScene("Escena_PenduloInvertido");
+        SceneManager.LoadScene("InvertedPendulum");
     }
 
     public void PausarSimulacion()
