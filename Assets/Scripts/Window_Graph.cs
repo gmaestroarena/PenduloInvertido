@@ -17,6 +17,7 @@ public class Window_Graph : MonoBehaviour
     private RectTransform dashTemplateY;
     private List<GameObject> gameObjectList_fuerza;
     private List<GameObject> gameObjectList_angulo;
+    
     private GameObject go_barra;
     private controlPID script_control;
     
@@ -33,6 +34,7 @@ public class Window_Graph : MonoBehaviour
     {
         script_control = GameObject.FindGameObjectWithTag("controlPID").GetComponent<controlPID>();
         go_barra = GameObject.Find("barra");
+
         graphContainer = transform.Find("graphContainer").GetComponent<RectTransform>();
         labelTemplateX = graphContainer.Find("labelTemplateX").GetComponent<RectTransform>();
         labelTemplateY = graphContainer.Find("labelTemplateY").GetComponent<RectTransform>();
@@ -45,11 +47,7 @@ public class Window_Graph : MonoBehaviour
         posiciones_fuerza = new List<Vector2>();
         posiciones_angulo = new List<Vector2>();
 
-        //valores = new List<float>() { 5, 98, 56, 45, 30, 22, 17, 15, 13, 17, 25, 37, 40, 36, 33, 50, 30, 60, 50, 40, 20, 5, 20, 10, 50, 30, 20, 11 };
-
-        //MostrarGrafica(valores,-1);
-
-
+        //Necesita conectarse a ControlPID y Barra para capturar los valores en cada intervalo de muestreo para actualizar variables de las dos gráficas
 
 
     }
@@ -257,7 +255,6 @@ public class Window_Graph : MonoBehaviour
                 actualizaListasReales(nPuntosVisibles);
             }
                 
-
             yield return new WaitForSeconds(intervalo); // Wait for the specified interval
         }
     }

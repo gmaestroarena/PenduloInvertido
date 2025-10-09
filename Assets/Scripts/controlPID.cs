@@ -33,10 +33,14 @@ public class controlPID : MonoBehaviour
     [SerializeField] public float mando_fx = 0f;
     [SerializeField][Range(0, 100)] public float limite_mando_fx = 50f;
 
+    [Space]
+    [Header("Referencias internas:")]
+    [Space]
+    [SerializeField] private Rigidbody2D rg2D_carro;
+    [SerializeField] private GameObject go_barra;
+    [SerializeField] private GameObject go_esfera;
+
     private float theta_anterior = 0f;
-    private Rigidbody2D rg2D_carro;
-    private GameObject go_barra;
-    private GameObject go_esfera;
     private float integracion = 0.0f;
     private bool mostrandoPerturbación = false;
     private float timer = 0.8f;
@@ -52,7 +56,7 @@ public class controlPID : MonoBehaviour
     private void OnValidate()
     {
         // Aplica rotación en el eje Z (2D)
-        GameObject.Find("barra").transform.rotation = Quaternion.Euler(0f, 0f, theta);
+        go_barra.transform.rotation = Quaternion.Euler(0f, 0f, theta);
     }
 
 
@@ -61,9 +65,7 @@ public class controlPID : MonoBehaviour
     void Start()
     {
         limiteF_ON = GameObject.Find("limFuerzaON").GetComponent<UnityEngine.UI.Toggle>();
-        rg2D_carro = GameObject.Find("carro").GetComponent<Rigidbody2D>();
-        go_barra = GameObject.Find("barra");
-        go_esfera = GameObject.Find("esfera_0");
+        
         sl_Kp = GameObject.Find("Slider_Kp").GetComponent<UnityEngine.UI.Slider>();
         sl_Ki = GameObject.Find("Slider_Ki").GetComponent<UnityEngine.UI.Slider>();
         sl_Kd = GameObject.Find("Slider_Kd").GetComponent<UnityEngine.UI.Slider>();
@@ -175,7 +177,7 @@ public class controlPID : MonoBehaviour
             go_esfera.transform.GetChild(1).gameObject.SetActive(true);
         }
 
-        GameObject.Find("barra").transform.rotation = Quaternion.Euler(0f, 0f, angulo);
+        go_barra.transform.rotation = Quaternion.Euler(0f, 0f, angulo);
         mostrandoPerturbación = true;
         timer = 0.8f;
     }
@@ -216,9 +218,9 @@ public class controlPID : MonoBehaviour
         GameObject.Find("ang_valor").GetComponent<TextMeshProUGUI>().text = (-theta).ToString("#0.#")+"º";
         if (estado == Estado.Pausa)
         {
-            GameObject.Find("barra").transform.rotation = Quaternion.Euler(0f, 0f, theta);
+            go_barra.transform.rotation = Quaternion.Euler(0f, 0f, theta);
         }
         
-  GameObject.Find("txt_perturbacion_2").GetComponent<TextMeshProUGUI>().text = "\u0398<sub> pert</sub>= " + (-theta).ToString() + "º";
+        GameObject.Find("txt_perturbacion_2").GetComponent<TextMeshProUGUI>().text = "\u0398<sub> pert</sub>= " + (-theta).ToString() + "º";
     }
 }

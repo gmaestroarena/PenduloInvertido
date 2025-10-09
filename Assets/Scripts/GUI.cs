@@ -6,40 +6,54 @@ using UnityEngine.UI;
 
 public class GUI : MonoBehaviour
 {
-    controlPID control;
-    
-    GameObject ob_sliderLimit;
-    GameObject ob_max_min;
-    GameObject ob_max_min_control;
-    GameObject p_graficas;
-    GameObject p_control;
+    [Space]
+    [Header("Referencias externas:")]
+    [Space]
+    [SerializeField] controlPID control;
+    [SerializeField] GameObject book;
 
-    Image b_play;
-    Image b_pause;
+    [Space]
+    [Header("Referencias internas:")]
+    [Space]
+    [SerializeField] GameObject grafica;
+    [SerializeField] GameObject p_graficas;
+    [SerializeField] GameObject p_control;
+    [Space]
+    [SerializeField] GameObject ob_sliderLimit;
+    [SerializeField] GameObject anguloInicial;
+    [Space]
+    [SerializeField] Image b_play;
+    [SerializeField] Image b_pause;
+    [Space]
+    [SerializeField] GameObject ob_max_min;
+    [SerializeField] GameObject ob_max_min_control;
 
-    GameObject book;
+
+    // Slider_ang (Dentro de AnguloInicial) cuando emite evento OnValueChanged(), se conecta a ControlPID (CambiarAnguloInicial())
+    // Slider_limF (Dentro de LimiteFuerza) cuando emite evento OnValueChanged(), se conecta a ControlPID (CambiarLimiteFuerza())
+    // btn_PERTURBACION1 y btn_PERTURBACION2 (Dentro de elementos_control), se conectan a ControlPID (AñadirPerturbacion1() y AñadirPerturbacion2())
 
     bool reanudarAlOcultarInstrucciones = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Referencias externas al GUI
         control = GameObject.FindGameObjectWithTag("controlPID").GetComponent<controlPID>();
         book = GameObject.Find("INSTRUCCIONES");
-        b_play = GameObject.Find("btn_PLAY").GetComponent<Image>();
-        b_pause = GameObject.Find("btn_PAUSE").GetComponent<Image>();
+        
+
+
         book.SetActive(false);
-        p_graficas = GameObject.Find("PanelGráficas");
-        p_control = GameObject.Find("PanelControl");
-        ob_sliderLimit = GameObject.Find("Slider_limF");
+                
         ob_sliderLimit.GetComponent<Slider>().enabled = false;
         ob_sliderLimit.GetComponent<Slider>().interactable = false;
         ob_sliderLimit.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         ob_sliderLimit.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0f);
         ob_sliderLimit.transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(false);
-        ob_max_min = GameObject.Find("btn_max_min");
-        ob_max_min_control = GameObject.Find("btn_max_min_control");
-        GameObject.Find("WindowGraph_g1").GetComponent<Window_Graph>().DibujaGrafica();
+
+        grafica.GetComponent<Window_Graph>().DibujaGrafica();
+
         b_play.color = new Color(1, 1, 1, .25f);
         b_pause.color = new Color(1, 1, 1, 1f);
     }
@@ -58,7 +72,7 @@ public class GUI : MonoBehaviour
             componente.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         }
         control.estado = Estado.Pausa;
-        GameObject.Find("AnguloInicial").GetComponent<TextMeshProUGUI>().text = "\u0398<sub>inicial</sub> =";
+        anguloInicial.GetComponent<TextMeshProUGUI>().text = "\u0398<sub>inicial</sub> =";
         b_play.color = new Color(1, 1, 1, .25f);
         b_pause.color = new Color(1, 1, 1, 1f);
     }
@@ -71,12 +85,9 @@ public class GUI : MonoBehaviour
             componente.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
         control.estado = Estado.Activo;
-        GameObject.Find("AnguloInicial").GetComponent<TextMeshProUGUI>().text = "\u0398<sub>pert</sub> =";
+        anguloInicial.GetComponent<TextMeshProUGUI>().text = "\u0398<sub>pert</sub> =";
         b_play.color = new Color(1, 1, 1, 1f);
         b_pause.color = new Color(1, 1, 1, .25f);
-
-        //GameObject.Find("WindowGraph1").GetComponent<Window_Graph>().DibujaGrafica(Variable.Theta);
-        //GameObject.Find("WindowGraph_g1").GetComponent<Window_Graph>().DibujaGrafica();
 
     }
 
@@ -86,7 +97,6 @@ public class GUI : MonoBehaviour
        
         if (t.isOn)
         {
-            //ob_sliderLimit.SetActive(true);
             ob_sliderLimit.GetComponent<Slider>().enabled = true;
             ob_sliderLimit.GetComponent<Slider>().interactable = true;
             ob_sliderLimit.transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
@@ -96,8 +106,6 @@ public class GUI : MonoBehaviour
         }
         else
         {
-            //ob_sliderLimit.SetActive(false);
-            
             ob_sliderLimit.GetComponent<Slider>().enabled = false;
             ob_sliderLimit.GetComponent<Slider>().interactable = false;
             ob_sliderLimit.transform.GetChild(0).GetComponent<Image>().color = new Color(1,1,1,0.5f);
@@ -151,8 +159,6 @@ public class GUI : MonoBehaviour
         }
         //ReanudarSimulacion();
     }
-
-
 
     public void MaxMinControl()
     {
