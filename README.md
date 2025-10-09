@@ -24,4 +24,4 @@ La simulación permite dos estados:\
 
 Existe la posibilidad de reiniciar el escenario de simulación con los parámetros por defecto y la inclinación inicial de la barra.
 
-Existe un pequeño manual guía del funcionamiento de la simulación y algunos ejemplos para practicar.
+Existe un pequeño manual guía del funcionamiento de la simulación y algunos ejemplos para practicar. Este manual utiliza el Asset **Book - Page Curl**, de Abdullah Aldandarawy 
