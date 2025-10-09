@@ -25,3 +25,15 @@ La simulación permite dos estados:\
 Existe la posibilidad de reiniciar el escenario de simulación con los parámetros por defecto y la inclinación inicial de la barra.
 
 Existe un pequeño manual guía del funcionamiento de la simulación y algunos ejemplos para practicar. Este manual utiliza el Asset **Book - Page Curl**, de Abdullah Aldandarawy (FREE Version), descargado de la Asset Store de Unity: [Unity Asset Store (Book - Page Curl)](https://assetstore.unity.com/packages/tools/animation/book-page-curl-55588)
+
+## Siguientes pasos
+1) Añadir distintas opciones de perturbación:
+     - Torque
+     - Fuerza horizontal
+2) Permitir que el mando, en vez de consistir en una fuerza, pueda configurarse también como torque.
+3) Permitir modificar en tiempo de ejecución otros parámetros relacionados con la física del péndulo (masas, longitudes, ligaduras)
+4) Comparación de las gráficas con el modelo teórico del control PID
+5) Incluir información más detallada en las gráficas (tiempos de respuesta, picos en la respuesta temporal, etc...)
+6) Permitir un entorno que permita hacer un diseño desde cero del control.
+
+   
