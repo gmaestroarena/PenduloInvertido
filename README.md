@@ -1,6 +1,10 @@
 # InvertedPendulum
 Control PID para controlar un Péndulo Invertido. Simulado con el motor de físicas de **Unity**.
 
+## Estado
+En progreso. Implementado nivel básico de simulación. Gráficas de Ángulo y Fuerza de Mando. 
+
+## Descripción
 Simulación de péndulo invertido. No se utilizan ecuaciones. Se simula el entorno físico (utilizando motor de físicas de **Unity**).
 El Control para gestionar el péndulo es un Control PID con parámetros **Kp**, **Ki** y **Kd**.
 No se ha realizado un diseño para calcular los parámetros, tan sólo se ha definido un intervalo de trabajo de cada uno de ellos y, empíricamente se estudia si la respuesta del control a perturbaciones reacciona de una forma estable o no.
