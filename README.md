@@ -24,4 +24,4 @@ La simulación permite dos estados:\
 
 Existe la posibilidad de reiniciar el escenario de simulación con los parámetros por defecto y la inclinación inicial de la barra.
 
-Existe un pequeño manual guía del funcionamiento de la simulación y algunos ejemplos para practicar. Este manual utiliza el Asset **Book - Page Curl**, de Abdullah Aldandarawy (FREE Version), descargado de la Asset Store de Unity: [Asset Store: Book - Page Curl](https://assetstore.unity.com/packages/tools/animation/book-page-curl-55588)
+Existe un pequeño manual guía del funcionamiento de la simulación y algunos ejemplos para practicar. Este manual utiliza el Asset **Book - Page Curl**, de Abdullah Aldandarawy (FREE Version), descargado de la Asset Store de Unity: [Unity Asset Store (Book - Page Curl)](https://assetstore.unity.com/packages/tools/animation/book-page-curl-55588)
