@@ -78,14 +78,30 @@ public class controlPID : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         rg2D_carro.totalForce = Vector3.zero;
         lbl_fuerza.text = mando_fx.ToString("#0.#") + " N";
         if (estado == Estado.Activo)
         {
-            rg2D_carro.AddForce(new Vector3(1, 0, 0) * mando_fx);
-            // Implementamos Control PID Completo con los parámetros Kp, Ki y Kd
-            Control_PID();
-            theta_anterior = go_barra.transform.rotation.z;
+            if (go_barra.GetComponent<HingeJoint2D>() != null)
+            {
+                rg2D_carro.AddForce(new Vector3(1, 0, 0) * mando_fx);
+                
+                 // Implementamos Control PID Completo con los parámetros Kp, Ki y Kd
+                Control_PID();
+                theta_anterior = go_barra.transform.rotation.z;
+            }
+            else 
+            {
+                mando_fx = 0f;
+                rg2D_carro.transform.Find("SectorCircular").gameObject.SetActive(false);
+                rg2D_carro.transform.Find("ejeY").gameObject.SetActive(false);
+            }
+
+
+               
+
+                
         }
                       
         //theta = mando_fx / (Masa_M * l_barra * Time.deltaTime * Time.deltaTime - (Masa_M + masa_m) * g);

@@ -12,6 +12,7 @@ public class GUI : MonoBehaviour
     [SerializeField] controlPID control;
     [SerializeField] GameObject book;
 
+
     [Space]
     [Header("Referencias internas:")]
     [Space]
