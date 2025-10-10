@@ -41,11 +41,16 @@ public class GUI : MonoBehaviour
     {
         //Referencias externas al GUI
         control = GameObject.FindGameObjectWithTag("controlPID").GetComponent<controlPID>();
+
         book = GameObject.Find("INSTRUCCIONES");
+
+        PausarSimulacion();
+
+        if (book != null)
+        {
+            book.SetActive(false);
+        }
         
-
-
-        book.SetActive(false);
                 
         ob_sliderLimit.GetComponent<Slider>().enabled = false;
         ob_sliderLimit.GetComponent<Slider>().interactable = false;
@@ -53,7 +58,11 @@ public class GUI : MonoBehaviour
         ob_sliderLimit.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 0f);
         ob_sliderLimit.transform.GetChild(2).GetChild(0).GetChild(0).gameObject.SetActive(false);
 
-        grafica.GetComponent<Window_Graph>().DibujaGrafica();
+        if (grafica != null)
+        {
+            grafica.GetComponent<Window_Graph>().DibujaGrafica();
+        }
+            
 
         b_play.color = new Color(1, 1, 1, .25f);
         b_pause.color = new Color(1, 1, 1, 1f);
