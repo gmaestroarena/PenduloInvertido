@@ -33,8 +33,8 @@ public class Sector2D : MonoBehaviour
         if (mf.sharedMesh == null)
         {
             mesh = new Mesh();
-            mesh.name = $"Sector2D_Mesh_{GetInstanceID()}";
-            mf.sharedMesh = mesh;
+            mesh.name = $"Sector2D_Mesh_{GetEntityId()}";
+          mf.sharedMesh = mesh;
         }
         else
         {

@@ -1187,6 +1187,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1490182599051632738, guid: b4272f43dfb597f46978a9218810a487, type: 3}
+      propertyPath: desconectarFueraDeRango
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 123565840901955833, guid: b4272f43dfb597f46978a9218810a487, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
       value: 0
@@ -1287,10 +1291,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5808097760006046251, guid: b4272f43dfb597f46978a9218810a487, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6112247133369512801, guid: b4272f43dfb597f46978a9218810a487, type: 3}
       propertyPath: m_Name
       value: ControlPID
@@ -1357,6 +1357,53 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 967145436}
   m_SourcePrefab: {fileID: 100100000, guid: b4272f43dfb597f46978a9218810a487, type: 3}
+--- !u!1 &2050000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2050000002}
+  - component: {fileID: 2050000003}
+  m_Layer: 0
+  m_Name: SelectorEscenarios
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2050000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b640d64d15b4f23b5791490bec67805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icono: {fileID: 6886320683950798640, guid: 8b7b33f5509c9b845818a6e020392f1a, type: 3}
+  botonReferencia: btn_INSTRUCCIONES
+  desplazamientoX: -50
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1366,3 +1413,4 @@ SceneRoots:
   - {fileID: 382357186}
   - {fileID: 1846608089}
   - {fileID: 135353798}
+  - {fileID: 2050000002}

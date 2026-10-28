@@ -8,6 +8,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InvertedPendulum.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Ejercicio2.unity
+    guid: 325fb998937b4cc4c9f3ace8a8fbc12b
+  - enabled: 1
+    path: Assets/Scenes/Ejercicio1.unity
+    guid: 2eb31104b29627f4a9eefff604d6391d
+  - enabled: 1
+    path: Assets/Scenes/Ejercicio0.unity
+    guid: 8b12879935bd81f438981d3a954c0cb1
+  - enabled: 1
+    path: Assets/Scenes/Ejercicio3.unity
+    guid: 8c7616be222f47c47880e1138d75ca96
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
-  m_UseUCBPForAssetBundles: 0

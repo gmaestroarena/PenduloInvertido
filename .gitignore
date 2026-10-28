@@ -97,3 +97,11 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Copias de seguridad locales y archivos generados por herramientas del editor
+/_backup/
+/AGENTS.md
+/Packages/com.merry-yellow.code-assist/
+
+# Carpeta de depuración que Unity genera junto al ejecutable (no se distribuye)
+*_BackUpThisFolder_ButDontShipItWithYourGame/

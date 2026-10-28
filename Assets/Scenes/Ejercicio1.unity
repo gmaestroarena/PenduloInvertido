@@ -173,7 +173,7 @@ MonoBehaviour:
   sliderFuerza: {fileID: 602163585}
 --- !u!120 &76131839
 LineRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -219,6 +219,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -277,7 +278,6 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
@@ -854,21 +854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1.- Hemos a\xF1adido Script a la C\xE1mara para que maneje ZOOM y Scroll
-    lateral:\n          - Observad c\xF3mo se implementa el scroll de Cielo y Decorado
-    (Parallax)\n          - El Zoom se modifica a medida que var\xEDa el valor de
-    la posici\xF3n x del carro\n          - Para que funcione correctamente, Cielo
-    y Decorado deben estar en GUI\n          - La c\xE1mara puede ser fija, o ser
-    Hija de otro GameObject (p.e. carro)\n\n2.- GUI: Configurado como Screen Space
-    - Camera\n          - A\xF1adiremos los elementos que no ser\xE1n afectados por
-    el zoom o scroll \n          - Se incluyen aqu\xED todos los controles UI (texto,
-    botones, sliders, etc...)\n          - A\xF1adimos un Slider para controlar el
-    movimiento horizontal del carro\n\n3.- Control manual del carro:\n          
-    - A\xF1adimos script ControlManual a WORLD\n           - Referenciamos al carro
-    (componente RigidBody2D) y al slider\n           - Cada frame, asignamos una
-    F horizontal al carrito proporcional al valor del slider\n           - Intenta
-    \"subir\" la bola a la posici\xF3n m\xE1s alta controlando el slider. Es f\xE1cil,
-    \xBFno?"
+  m_text: "1.- Hemos a\xF1adido Script a la C\xE1mara para que maneje ZOOM y Scroll lateral:\n          - Observad c\xF3mo se implementa el scroll de Cielo y Decorado (Parallax)\n          - El Zoom se modifica a medida que var\xEDa el valor de la posici\xF3n x del carro\n          - Para que funcione correctamente, Cielo y Decorado deben estar en GUI\n          - La c\xE1mara puede ser fija, o ser Hija de otro GameObject (p.e. carro)\n\n2.- GUI: Configurado como Screen Space - Camera\n          - A\xF1adiremos los elementos que no ser\xE1n afectados por el zoom o scroll \n          - Se incluyen aqu\xED todos los controles UI (texto, botones, sliders, etc...)\n          - A\xF1adimos un Slider para controlar el movimiento horizontal del carro\n\n3.- Control manual del carro:\n           - A\xF1adimos script ControlManual a WORLD\n           - Referenciamos al carro (componente RigidBody2D) y al slider\n           - En cada paso de f\xEDsica (FixedUpdate) aplicamos al carro una F horizontal\n             proporcional al slider: F = valor x fuerzaMax (\xB1100 x 2 = \xB1200 N)\n           - Al soltar el slider vuelve a 0 (script SliderRetornoCero)\n           - Intenta \"subir\" la bola a la posici\xF3n m\xE1s alta controlando el slider. Es f\xE1cil, \xBFno?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -906,6 +892,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -917,7 +904,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -971,10 +958,6 @@ PrefabInstance:
       value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 1151326162084101185, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151326162084101185, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
       propertyPath: m_AngularDamping
       value: 0.2
       objectReference: {fileID: 0}
@@ -1009,10 +992,6 @@ PrefabInstance:
     - target: {fileID: 2636277807948005363, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
       propertyPath: m_SortingLayerID
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849059322077340186, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_Mass
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2849059322077340186, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
       propertyPath: m_BodyType
@@ -1094,29 +1073,13 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7580631118349321303, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7580631118349321303, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_LinearDamping
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7653522998499612764, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8955003578276052658, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8955003578276052658, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
       propertyPath: m_BodyType
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8955003578276052658, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
-      propertyPath: m_LinearDamping
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1490182599051632738, guid: 4e2590c292ae05a41afd679db3e3a908, type: 3}
@@ -1280,7 +1243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Ejercicio 1: P\xE9ndulo Invertido (Control Manual)"
+  m_text: "Paso 2: Control Manual"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1318,6 +1281,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1329,7 +1293,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -1376,7 +1340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
 --- !u!120 &889328094
 LineRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1422,6 +1386,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -1480,7 +1445,6 @@ LineRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MaskInteraction: 0
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
@@ -1514,8 +1478,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   carro: {fileID: 889328089}
   slider_Fuerza: {fileID: 602163585}
-  fuerzaMax: 6
+  fuerzaMax: 2
   direccion: {x: 1, y: 0}
+  volverACeroAlSoltar: 1
+  tiempoRetorno: 0.25
 --- !u!1 &1181000929
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,8 +1539,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Con el Slider podr\xE1s aplicar una fuerza horizontal al carro.\\nIntenta
-    mantener la bola en la posici\xF3n m\xE1s elevada."
+  m_text: "Con el Slider podr\xE1s aplicar una fuerza horizontal al carro.\\nIntenta mantener la bola en la posici\xF3n m\xE1s elevada."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1612,6 +1577,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1623,7 +1589,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -1879,6 +1845,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2050000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2050000002}
+  - component: {fileID: 2050000003}
+  m_Layer: 0
+  m_Name: SelectorEscenarios
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2050000002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050000001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b640d64d15b4f23b5791490bec67805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ubicacion: 1
+  icono: {fileID: 6886320683950798640, guid: 8b7b33f5509c9b845818a6e020392f1a, type: 3}
+  botonReferencia: btn_INSTRUCCIONES
+  desplazamientoX: -50
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1887,3 +1901,4 @@ SceneRoots:
   - {fileID: 509790407}
   - {fileID: 264700685}
   - {fileID: 1354664693}
+  - {fileID: 2050000002}

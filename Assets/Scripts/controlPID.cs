@@ -18,6 +18,11 @@ public class controlPID : MonoBehaviour
     [SerializeField][Range(0,100)] private float Kp = 1f;
     [SerializeField][Range(0, 20)] private float Ki = 1f;
     [SerializeField][Range(0, 20)] private float Kd = 1f;
+    [Header("Protección (mejora de InvertedPendulum):")]
+    [Tooltip("Si está activa, el control se desconecta (mando = 0) cuando la barra se inclina más de 'anguloMaxControl': el péndulo se da por perdido y oscila libremente, protegiendo al carro de chocar contra los topes y romper el péndulo. Desactivada en Ejercicio2 y Ejercicio3; activada en InvertedPendulum.")]
+    [SerializeField] private bool desconectarFueraDeRango = false;
+    [Tooltip("Ángulo (grados) a partir del cual se desconecta el control si la protección está activa.")]
+    [SerializeField][Range(0, 180)] private float anguloMaxControl = 90f;
     [Space]
     [Header("Parámetros:")]
     [Space]
@@ -40,7 +45,13 @@ public class controlPID : MonoBehaviour
     [SerializeField] private GameObject go_barra;
     [SerializeField] private GameObject go_esfera;
 
-    private float theta_anterior = 0f;
+    // Factor de escala de las ganancias. La versión anterior usaba 10 * rotation.z, y rotation.z = sin(theta/2) ~ theta/2,
+    // así que la ganancia efectiva era ~5 por radián. Con 5 se mantiene el mismo comportamiento para ángulos pequeños
+    // y los valores de Kp, Ki y Kd de los ejercicios siguen siendo válidos.
+    private const float ESCALA_GANANCIAS = 5f;
+
+    private Rigidbody2D rb_barra;
+    private BolaPendulo bola;
     private float integracion = 0.0f;
     private bool mostrandoPerturbación = false;
     private float timer = 0.8f;
@@ -73,6 +84,9 @@ public class controlPID : MonoBehaviour
         sl_angInicial = GameObject.Find("Slider_ang").GetComponent<UnityEngine.UI.Slider>();
         lbl_fuerza = GameObject.Find("FuerzaMando").GetComponent<TextMeshProUGUI>();
         limiteF_ON.isOn = false;
+
+        rb_barra = go_barra.GetComponent<Rigidbody2D>();
+        bola = FindAnyObjectByType<BolaPendulo>();
     }
     
     // Update is called once per frame
@@ -85,11 +99,10 @@ public class controlPID : MonoBehaviour
         {
             if (go_barra.GetComponent<HingeJoint2D>() != null)
             {
-                rg2D_carro.AddForce(new Vector3(1, 0, 0) * mando_fx);
-                
-                 // Implementamos Control PID Completo con los parámetros Kp, Ki y Kd
+                // Implementamos Control PID Completo con los parámetros Kp, Ki y Kd.
+                // Primero se calcula el mando con el estado actual y después se aplica (sin retardo de un paso).
                 Control_PID();
-                theta_anterior = go_barra.transform.rotation.z;
+                rg2D_carro.AddForce(new Vector3(1, 0, 0) * mando_fx);
             }
             else 
             {
@@ -123,6 +136,41 @@ public class controlPID : MonoBehaviour
         }
     }
 
+    // Ángulo de la barra respecto a la vertical, en radianes, en el intervalo (-pi, pi].
+    // Positivo = giro antihorario (barra inclinada hacia la izquierda).
+    // (Antes se usaba transform.rotation.z, que es la componente z del cuaternión = sin(theta/2), no el ángulo.)
+    float AnguloBarra()
+    {
+        return Mathf.DeltaAngle(0f, go_barra.transform.eulerAngles.z) * Mathf.Deg2Rad;
+    }
+
+    // Saturación simétrica de la fuerza de mando: |mando| <= limite
+    float Saturar(float mando)
+    {
+        return Mathf.Sign(mando) * Mathf.Min(Mathf.Abs(mando), limite_mando_fx);
+    }
+
+    // Fuera del rango de trabajo el controlador se desconecta: mando nulo y sin memoria integral.
+    // Sin esto, con la barra por debajo de la horizontal el PID seguiría empujando con cientos de newtons
+    // (y el signo del error salta al pasar por la vertical inferior), sacudiendo el carro y haciendo
+    // oscilar la barra mucho más rápido que un péndulo libre.
+    bool FueraDeRango(float error)
+    {
+        if (desconectarFueraDeRango && Mathf.Abs(error) > anguloMaxControl * Mathf.Deg2Rad)
+        {
+            mando_fx = 0f;
+            integracion = 0f;
+            return true;
+        }
+        return false;
+    }
+
+    // Reinicia la memoria del controlador (acción integral)
+    public void ReiniciarControl()
+    {
+        integracion = 0f;
+    }
+
     void Control_P()
     {
 
@@ -136,11 +184,12 @@ public class controlPID : MonoBehaviour
         //
         // NOTA: El control_P no se utiliza en el programa, pero lo dejamos para que se pueda entender como un paso del control PID
 
-        float error = referencia - go_barra.transform.rotation.z;
-        mando_fx = Kp * error;
+        float error = referencia - AnguloBarra();
+        if (FueraDeRango(error)) return;
+        mando_fx = ESCALA_GANANCIAS * Kp * error;
         if (limiteF_ON.isOn)
         {
-            mando_fx = Mathf.Sign(mando_fx)*Mathf.Min(mando_fx, limite_mando_fx);
+            mando_fx = Saturar(mando_fx);
         }
     }
 
@@ -156,24 +205,44 @@ public class controlPID : MonoBehaviour
         //
         // NOTA: El control_PI no se utiliza en el programa, pero lo dejamos para que se pueda entender como un paso del control PID
 
-        float error = referencia - go_barra.transform.rotation.z;
-        integracion += error*Time.deltaTime;
-        mando_fx = (10*Kp * error + integracion * 10*Ki);
-        if (limiteF_ON.isOn)
+        float error = referencia - AnguloBarra();
+        if (FueraDeRango(error)) return;
+        float integracion_nueva = integracion + error * Time.deltaTime;
+        float mando = ESCALA_GANANCIAS * (Kp * error + Ki * integracion_nueva);
+
+        if (limiteF_ON.isOn && Mathf.Abs(mando) > limite_mando_fx)
         {
-            mando_fx = Mathf.Sign(mando_fx) * Mathf.Min(mando_fx, limite_mando_fx);
+            // Anti-windup: si el mando está saturado no se acumula la integral
+            mando_fx = Saturar(mando);
+        }
+        else
+        {
+            integracion = integracion_nueva;
+            mando_fx = mando;
         }
     }
 
     void Control_PID()
     {
-        float error = referencia - go_barra.transform.rotation.z;
-        integracion += error * Time.deltaTime;
-        float derivada_theta = -(go_barra.transform.rotation.z - theta_anterior) / Time.deltaTime;
-        mando_fx = (10 * Kp * error + integracion * 10 * Ki + derivada_theta * 10 * Kd);
-        if (limiteF_ON.isOn)
+        float error = referencia - AnguloBarra();
+        if (FueraDeRango(error)) return;
+
+        // Derivada del error = -d(theta)/dt. Se toma directamente la velocidad angular de la barra (grados/s -> rad/s)
+        // en lugar de derivar numéricamente: así no hay picos ("derivative kick") al arrancar ni al aplicar perturbaciones.
+        float derivada_error = -rb_barra.angularVelocity * Mathf.Deg2Rad;
+
+        float integracion_nueva = integracion + error * Time.deltaTime;
+        float mando = ESCALA_GANANCIAS * (Kp * error + Ki * integracion_nueva + Kd * derivada_error);
+
+        if (limiteF_ON.isOn && Mathf.Abs(mando) > limite_mando_fx)
         {
-            mando_fx = Mathf.Sign(mando_fx) * Mathf.Min(Mathf.Abs(mando_fx), limite_mando_fx);
+            // Anti-windup (integración condicional): si el mando está saturado no se acumula la integral
+            mando_fx = Saturar(mando);
+        }
+        else
+        {
+            integracion = integracion_nueva;
+            mando_fx = mando;
         }
     }
 
@@ -194,6 +263,8 @@ public class controlPID : MonoBehaviour
         }
 
         go_barra.transform.rotation = Quaternion.Euler(0f, 0f, angulo);
+        if (bola != null) bola.Recolocar();   // la bola ya no es hija de la barra: hay que llevarla con ella
+        ReiniciarControl();
         mostrandoPerturbación = true;
         timer = 0.8f;
     }

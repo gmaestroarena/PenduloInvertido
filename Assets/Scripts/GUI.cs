@@ -71,7 +71,15 @@ public class GUI : MonoBehaviour
 
     public void ReiniciarSimulacion()
     {
-        SceneManager.LoadScene("InvertedPendulum");
+        // Recarga la escena ACTUAL (antes siempre cargaba "InvertedPendulum", también desde los ejercicios)
+        Scene actual = SceneManager.GetActiveScene();
+#if UNITY_EDITOR
+        // En el editor se carga por ruta: funciona aunque la escena no esté en la lista de escenas del build
+        UnityEditor.SceneManagement.EditorSceneManager.LoadSceneInPlayMode(actual.path, new LoadSceneParameters(LoadSceneMode.Single));
+#else
+        // En un ejecutable la escena tiene que estar incluida en el build
+        SceneManager.LoadScene(actual.buildIndex);
+#endif
     }
 
     public void PausarSimulacion()
